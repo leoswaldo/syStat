@@ -39,8 +39,8 @@ The information could be retrived in next formats:
 
 > NOTE
 
-> By default the tool will return status for all sections, if you need for one
-> specific section, please pass it as parameter
+> By default the tool will return status of all sections, if you need of one
+> specific section you can do that by passing it(them) as parameter(s)
 
 
     --os
