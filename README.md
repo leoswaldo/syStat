@@ -4,7 +4,7 @@ syStat
 syStat is a tool created to get basic status from our Linux Servers. syStat
 runs an scan in the system every time it is run.
 
-System information retrived:
+System information:
 ----
     - OS Details
     - CPU Usage
