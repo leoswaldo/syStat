@@ -14,7 +14,8 @@ class TableContentGenerator():
     ## Method: generate_table
     #  Description: generate content for the table
     #  Parameters: command
-    #    command: command to run in the os to get the content of the table
+    #    command: command to run in the os to get the content of the table, it
+    #        should be a list (the command and its parameters)
     def generate_table(self, command):
         status, stdout, stderr = utilities.run_command(command)
         # if success running the command, otherwise else
