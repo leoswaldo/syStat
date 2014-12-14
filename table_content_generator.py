@@ -10,33 +10,45 @@ class TableContentGenerator():
     #  Description: initialize the class vars
     def __init__(self):
         self.content_table = None
+        self.table_headers = None
+        self.command_output = ''
 
     ## Method: generate_table
     #  Description: generate content for the table
-    #  Parameters: command
+    #  Parameters: command, headers
     #    command: command to run in the os to get the content of the table, it
     #        should be a list (the command and its parameters)
-    def generate_table(self, command):
+    #    headers: headers for table, defaunt to None
+    def generate_table(self, command, headers=None):
         status, stdout, stderr = utilities.run_command(command)
         # if success running the command, otherwise else
         if(status == 0):
             # the rows are separated by  '\n' so we need to split it
-            command_output = str(stdout).split('\\n')
-            # Remove the headers from the output, it will always be the
-            # first row
-            headers = command_output.pop(0)
-            # Createh the list using split(), since the rows are strings
-            header_fields = str(headers).split()
-            num_fields = len(header_fields)
-
+            self.command_output = stdout.decode('utf-8').split('\n')
+            self.set_headers(headers)
+            num_fields = len(self.table_headers)
             # initialize the table as PrettyTable to use its features with
             # headers from output, and add content
-            self.content_table = PrettyTable(header_fields)
-            self.add_content(command_output, num_fields)
+            self.content_table = PrettyTable(self.table_headers)
+            self.add_content(self.command_output, num_fields)
         else:
             self.content_table = stdout
 
         return self.content_table
+
+    ## Mehthod: set_headers
+    #  Description:  define table headers based on parameters or table content
+    #  Parameters: headers
+    #      headers: headers for table
+    def set_headers(self, headers):
+        if(headers):
+            self.table_headers = headers
+        else:
+            # Remove the headers from the output, it will always be the
+            # first row
+            headers = self.command_output.pop(0)
+            # Create the list using split(), since the rows are strings
+            self.table_headers = str(headers).split()
 
     ## Method: add_content
     #  Description: iterate through command output and add it to the table with
