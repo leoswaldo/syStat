@@ -46,6 +46,6 @@ def format_string(title, string):
 def format_section(section_title, section_content):
     # Format: Line1: section title, Line2: content, end: two blank lines
     section = section_title + '\n'
-    section += section_content
+    section += str(section_content)
     section += '\n\n'
     return section
