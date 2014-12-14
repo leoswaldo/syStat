@@ -2,6 +2,7 @@
 
 import sys
 import getopt
+from sections_generator import SectionsGenerator
 
 
 ## Function: discover_args
@@ -70,9 +71,15 @@ def generate_content():
     global show_all_sections, os, cpu, memory, disk, network, process, programs
     global users
 
+    # Create the section_generator object to generar each section
+    section_generator = SectionsGenerator()
+
+    # sections will store the result of all required sections
+    sections = ''
+
     if(show_all_sections or os):
         # call to generate the status section
-        pass
+        sections += section_generator.generate_os_section()
     if(show_all_sections or cpu):
         # call to generate the status section
         pass
@@ -94,6 +101,8 @@ def generate_content():
     if(show_all_sections or users):
         # call to generate the status section
         pass
+
+    print(sections)
 
 
 if(__name__ == '__main__'):
