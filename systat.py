@@ -94,7 +94,7 @@ def generate_content():
         sections += section_generator.generate_network_section()
     if(show_all_sections or process):
         # call to generate the status section
-        pass
+        sections += section_generator.generate_process_section()
     if(show_all_sections or programs):
         # call to generate the status section
         pass

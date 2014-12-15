@@ -69,7 +69,7 @@ class SectionsGenerator():
         return disk_section
 
     ## Method: generate_network_section
-    #  Description: generate and fromat network section
+    #  Description: generate and format network section
     def generate_network_section(self):
         hostname_command = ['hostname', '--fqdn']
         ip_command = ['hostname', '--ip-addr']
@@ -89,8 +89,16 @@ class SectionsGenerator():
             network_section_content)
         return network_section
 
+    ## Method: generate_process_section
+    #  Description: generate and format processes section
     def generate_process_section(self):
-        pass
+        processes_command = ['ps', 'aux', '--sort', '-rss']
+        # Generate table
+        processes_table = self.table_generator.generate_table(processes_command)
+        # Give special format to processes section
+        processes_section = utilities.format_section('Process Running',
+            processes_table)
+        return processes_section
 
     def generate_programs_section(self):
         pass
