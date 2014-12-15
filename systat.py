@@ -88,7 +88,7 @@ def generate_content():
         sections += section_generator.generate_memory_section()
     if(show_all_sections or disk):
         # call to generate the status section
-        pass
+        sections += section_generator.generate_disk_section()
     if(show_all_sections or network):
         # call to generate the status section
         pass

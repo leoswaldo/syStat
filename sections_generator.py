@@ -59,7 +59,12 @@ class SectionsGenerator():
         return mem_section
 
     def generate_disk_section(self):
-        pass
+        disk_command = ['df', '-h']
+        # Generate table
+        disk_table = self.table_generator.generate_table(disk_command)
+        # Give special format to section
+        disk_section = utilities.format_section('Disk Space', disk_table)
+        return disk_section
 
     def generate_network_section(self):
         pass
