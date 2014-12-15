@@ -45,8 +45,8 @@ class SectionsGenerator():
             cpu_performance)
         return cpu_section
 
-    ## method: genearte_memory_section
-    #  Description: gena
+    ## Method: genearte_memory_section
+    #  Description: generateand format memory section
     def generate_memory_section(self):
         # Define command and headers
         mem_command = ['cat', '/proc/meminfo']
@@ -58,6 +58,8 @@ class SectionsGenerator():
         mem_section = utilities.format_section('Memory', mem_table)
         return mem_section
 
+    ## Method: generate_disk_section
+    #  Description: generate and format disk space section
     def generate_disk_section(self):
         disk_command = ['df', '-h']
         # Generate table
@@ -66,8 +68,26 @@ class SectionsGenerator():
         disk_section = utilities.format_section('Disk Space', disk_table)
         return disk_section
 
+    ## Method: generate_network_section
+    #  Description: generate and fromat network section
     def generate_network_section(self):
-        pass
+        hostname_command = ['hostname', '--fqdn']
+        ip_command = ['hostname', '--ip-addr']
+        ports_command = ['netstat', '-taupen']
+        # Get and format hostname/IP address
+        hostname_status, hostname, hostname_stderr =\
+            utilities.run_command(hostname_command)
+        hostname = utilities.format_string('Host', hostname)
+        ip_status, ip, ip_stderr = utilities.run_command(ip_command)
+        ip = utilities.format_string('Default IP Address', ip)
+        # Get and format ports listening, The netstat command gives an special
+        # format of the table
+        ports_status, ports, ports_stderr = utilities.run_command(ports_command)
+        ports_table = ports.decode('utf-8')
+        network_section_content = hostname + ip + ports_table
+        network_section = utilities.format_section('Network',
+            network_section_content)
+        return network_section
 
     def generate_process_section(self):
         pass
