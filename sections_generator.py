@@ -1,5 +1,6 @@
 #!/python3/bin/python3
 
+from prettytable import PrettyTable
 import utilities
 from table_content_generator import TableContentGenerator
 
@@ -103,5 +104,47 @@ class SectionsGenerator():
     def generate_programs_section(self):
         pass
 
+    ## Method: generate_users_section (Yes I know it is an ugly method)
+    #  Description: generate and format processes section
     def generate_users_section(self):
-        pass
+        # Note: we implement the 'members' and 'groups' commands to avoid them
+        # as dependencies
+        users_command = ['cat', '/etc/passwd']
+        groups_command = ['cat', '/etc/group']
+        users_status, users, users_stderr = utilities.run_command(users_command)
+        groups_status, groups, groups_stderr = utilities.run_command(
+            groups_command)
+        users = users.decode('utf-8').split('\n')
+        # we need to remove last line (empty line)
+        users.pop(len(users) - 1)
+        groups = groups.decode('utf-8').split('\n')
+        # we need to remove last line (empty line)
+        groups.pop(len(groups) - 1)
+
+        user_groups = {}
+
+        # Iterate through each user in the system, then find the users in each
+        # group
+        for user_details in users:
+            user = user_details.split(':')[0]
+            user_groups[user] = []
+            for group_details in groups:
+                group_list = group_details.split(':')
+
+                if(len(group_list) == 4):
+                    group = group_list[0]
+                    group_members = group_list[3]
+                    members_list = group_members.split(',')
+                    for member in members_list:
+                        if(user == member):
+                            user_groups[user].append(group)
+
+        # Create the pretty table
+        users_table = PrettyTable(['User', 'Groups'])
+        for user in user_groups:
+            users_table.add_row([user, user_groups[user]])
+
+        # Give special format to processes section
+        users_section = utilities.format_section('System Users', users_table)
+        return users_section
+

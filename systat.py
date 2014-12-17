@@ -100,7 +100,7 @@ def generate_content():
         pass
     if(show_all_sections or users):
         # call to generate the status section
-        pass
+        sections += section_generator.generate_users_section()
 
     print(sections)
 
