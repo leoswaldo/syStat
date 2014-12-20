@@ -61,6 +61,19 @@ def discover_args(options):
             show_all_sections = False
 
 
+## Function: deliver_output
+#  Description: based on the args, send the output to corresponding destinations
+def deliver_output():
+    # Open scope for global vars
+    global stdout, log, mail, sections
+    if(stdout):
+        print(sections)
+    if(log):
+        pass
+    if(mail):
+        pass
+
+
 ## Function: generate_content
 #  Description: Based on the args, this function will trigger the functions to
 #  generate every status section content, and append it to the final result
@@ -69,13 +82,10 @@ def generate_content():
     # is passed the program
     # Open scope for global vars
     global show_all_sections, os, cpu, memory, disk, network, process, programs
-    global users
+    global users, sections
 
     # Create the section_generator object to generar each section
     section_generator = SectionsGenerator()
-
-    # sections will store the result of all required sections
-    sections = ''
 
     if(show_all_sections or os):
         # call to generate the status section
@@ -102,8 +112,6 @@ def generate_content():
         # call to generate the status section
         sections += section_generator.generate_users_section()
 
-    print(sections)
-
 
 if(__name__ == '__main__'):
     # options to be catched by the script
@@ -116,7 +124,11 @@ if(__name__ == '__main__'):
     show_all_sections = True
     # Initialize global vars
     os = cpu = memory = disk = network = process = programs = users = False
+    log = stdout = mail = False
+    mail_to = sections = ''
     # inspect options sent to systat
     discover_args(options)
     # generate status content for sections
     generate_content()
+    # send the output to corresponding destinations
+    deliver_output()
