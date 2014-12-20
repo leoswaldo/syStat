@@ -2,6 +2,8 @@
 
 import sys
 import getopt
+import time
+import datetime
 from sections_generator import SectionsGenerator
 
 
@@ -61,6 +63,20 @@ def discover_args(options):
             show_all_sections = False
 
 
+## Function: write_to_log
+#  Description: send output to log file
+def write_to_log():
+    # Open scope for global vars
+    global sections
+    # prepare timestamp for log filename
+    ts = time.time()
+    timestamp = datetime.datetime.fromtimestamp(ts).\
+        strftime('%Y-%m-%d_%H:%M:%S')
+    with open('logs/systat_' + timestamp, 'w') as log_file:
+        log_file.write(sections)
+    log_file.close()
+
+
 ## Function: deliver_output
 #  Description: based on the args, send the output to corresponding destinations
 def deliver_output():
@@ -69,7 +85,7 @@ def deliver_output():
     if(stdout):
         print(sections)
     if(log):
-        pass
+        write_to_log()
     if(mail):
         pass
 
