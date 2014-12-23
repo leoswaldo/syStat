@@ -150,13 +150,27 @@ def generate_content():
         sections += section_generator.generate_users_section()
 
 
+## Function: show_usage_help
+#  Description: print help of usage (Pending of development)
+def show_usage_help():
+    pass
+
 if(__name__ == '__main__'):
     # options to be catched by the script
     longstyle_options = ['stdout', 'log', 'mail=', 'os', 'cpu', 'memory',
         'disk', 'network', 'process', 'users']
 
     # read args sent to systat
-    options, reminder = getopt.gnu_getopt(sys.argv[1:], '', longstyle_options)
+    try:
+        options, reminder = getopt.gnu_getopt(sys.argv[1:], '',
+            longstyle_options)
+    except getopt.GetoptError as err:
+        # print help information and exit:
+        print(str(err))
+        show_usage_help()
+        # exit the script to avoid any exception
+        sys.exit(2)
+
     # to easily determine if the user wants to see all status section
     show_all_sections = True
     # Initialize global vars
