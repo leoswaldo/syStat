@@ -56,10 +56,6 @@ def discover_args(options):
             global process
             process = True
             show_all_sections = False
-        elif(opt in '--programs'):
-            global programs
-            programs = True
-            show_all_sections = False
         elif(opt in '--users'):
             global users
             users = True
@@ -125,7 +121,7 @@ def generate_content():
     # By default syStat shows all status sections, but in case at least one
     # is passed the program
     # Open scope for global vars
-    global show_all_sections, os, cpu, memory, disk, network, process, programs
+    global show_all_sections, os, cpu, memory, disk, network, process
     global users, sections
 
     # Create the section_generator object to generar each section
@@ -149,9 +145,6 @@ def generate_content():
     if(show_all_sections or process):
         # call to generate the status section
         sections += section_generator.generate_process_section()
-    if(show_all_sections or programs):
-        # call to generate the status section
-        pass
     if(show_all_sections or users):
         # call to generate the status section
         sections += section_generator.generate_users_section()
@@ -160,14 +153,14 @@ def generate_content():
 if(__name__ == '__main__'):
     # options to be catched by the script
     longstyle_options = ['stdout', 'log', 'mail=', 'os', 'cpu', 'memory',
-        'disk', 'network', 'process', 'programs', 'users']
+        'disk', 'network', 'process', 'users']
 
     # read args sent to systat
     options, reminder = getopt.gnu_getopt(sys.argv[1:], '', longstyle_options)
     # to easily determine if the user wants to see all status section
     show_all_sections = True
     # Initialize global vars
-    os = cpu = memory = disk = network = process = programs = users = False
+    os = cpu = memory = disk = network = process = users = False
     log = stdout = mail = False
     mail_to = sections = ''
     # inspect options sent to systat

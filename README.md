@@ -12,7 +12,6 @@ System information:
     - Disk Space
     - Network
     - Processes Running
-    - Installed Programs (on HOLD for design)
     - Users
 
 Phase
@@ -49,7 +48,6 @@ The information could be retrived in next formats:
     --disk
     --network
     --processes
-    --programs (on HOLD for design)
     --users
 
 
