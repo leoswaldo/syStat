@@ -4,6 +4,9 @@ import sys
 import getopt
 import time
 import datetime
+import socket
+import smtplib
+from email.mime.text import MIMEText
 from sections_generator import SectionsGenerator
 
 
@@ -75,6 +78,31 @@ def write_to_log():
     with open('logs/systat_' + timestamp, 'w') as log_file:
         log_file.write(sections)
     log_file.close()
+
+
+## Function: send_mail
+#  Description: send output to mail
+def send_mail():
+    global sections, mail_to
+    msg = MIMEText(sections)
+
+    # Prepare subject of mail
+    fqdn = socket.getfqdn()
+    ts = time.time()
+    timestamp = datetime.datetime.fromtimestamp(ts).\
+        strftime('%Y-%m-%d_%H:%M:%S')
+    subject = 'syStat generated on %s at %s' % (fqdn, timestamp)
+    sender = 'syStat@' + fqdn
+
+    # Define headers of mail
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = mail_to
+
+    # Send the message via our own SMTP server.
+    s = smtplib.SMTP('localhost')
+    s.send_message(msg)
+    s.quit()
 
 
 ## Function: deliver_output
