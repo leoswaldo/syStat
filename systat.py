@@ -115,7 +115,7 @@ def deliver_output():
     if(log):
         write_to_log()
     if(mail):
-        pass
+        send_mail()
 
 
 ## Function: generate_content
