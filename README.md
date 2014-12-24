@@ -14,15 +14,12 @@ System information:
     - Processes Running
     - Users
 
-Phase
-----
-
-Development
 
 Status
 ----
 
-In Progress
+Ready to be used
+
 
 Usage
 ----
@@ -54,7 +51,13 @@ The information could be retrived in next formats:
 Tech
 ------
 
-Python
+Python3
+
+
+Requirements
+------
+Python 3 or higher
+If ther is usage of --mail parameter the server must be configure as SMTP
 
 
 License
