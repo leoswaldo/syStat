@@ -153,7 +153,40 @@ def generate_content():
 ## Function: show_usage_help
 #  Description: print help of usage (Pending of development)
 def show_usage_help():
-    pass
+    help_output = \
+    '''
+    NAME
+        syStat is a tool created to get basic status from our Linux Servers.
+        syStat runs an scan in the system every time it is run.
+
+    USAGE
+        python systat [options [options ...]]
+
+    OPTIONS
+        Sections
+        --os           : OS Details
+        --cpu          : CPU Usage
+        --memory       : Memory
+        --disk         : Disk Space
+        --network      : Network
+        --processes    : Processes Running
+        --users        : Users
+
+        Output Destination
+        --stdout       : print in terminal
+        --log          : send output to standard log file
+        --mail <mail>  : send output through mail
+
+    EXAMPLES
+        Next example runs for all sections and prints the output on the screen
+            $ python systat.py --stdout
+
+        Next example runs for section --disk and sends the output to two
+        destinations (mail and log file)
+            $ python systat.py --log --mail mymail@mail.com --disk
+    '''
+    print(help_output)
+
 
 if(__name__ == '__main__'):
     # options to be catched by the script
